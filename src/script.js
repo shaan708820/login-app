@@ -17,6 +17,10 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
+    const btn = e.target.querySelector('button');
+
+    btn.textContent = 'Registering...';
+    btn.disabled = true;
 
     const res = await fetch('/signup', {
         method: 'POST',
@@ -25,13 +29,26 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
-    alert(data.message);
+    
+    btn.textContent = 'Sign Up';
+    btn.disabled = false;
 
     if (res.ok) {
+        document.getElementById('modal-message').textContent = data.message;
+        document.getElementById('successModal').classList.add('active');
+        
         document.getElementById('login-email').value = email;
-        toggleForms(); // Switch to login form
+        document.getElementById('signupForm').reset();
+    } else {
+        alert(data.message);
     }
 });
+
+// Close modal and go to login
+function closeModal() {
+    document.getElementById('successModal').classList.remove('active');
+    toggleForms();
+}
 
 // Handle Login
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
