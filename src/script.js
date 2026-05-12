@@ -9,7 +9,6 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     button.textContent = 'Authenticating...';
     button.style.opacity = '0.7';
     button.disabled = true;
-
     // Simulate API Call
     setTimeout(() => {
         console.log('Login Attempt:', { email, password });
