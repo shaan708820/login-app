@@ -44,7 +44,17 @@
             <div class="nav-brand">GrowwTrade Pro</div>
             <div class="nav-account">
                 Wallet: ₹<span id="wallet-balance">0.00</span>
-                <button onclick="window.location.reload()" class="btn-outline">Logout</button>
+                
+                <!-- NEW: Profile Icon and Dropdown -->
+                <div class="profile-container">
+                    <div class="profile-icon" onclick="toggleProfileMenu()">👤</div>
+                    <div class="profile-menu" id="profileMenu">
+                        <div class="profile-email" id="user-email-display">user@example.com</div>
+                        <hr>
+                        <button onclick="openPasswordModal()">Change Password</button>
+                        <button onclick="logoutUser()" class="logout-btn">Logout</button>
+                    </div>
+                </div>
             </div>
         </nav>
 

@@ -340,3 +340,68 @@ h2 {
     .dashboard-grid { grid-template-columns: 250px 1fr; }
     .dashboard-grid .side-panel:last-child { grid-column: span 2; }
 }
+/* --- Profile Dropdown Styles --- */
+.profile-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.profile-icon {
+    background: #e2e8f0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.profile-icon:hover { background: #cbd5e1; }
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 8px;
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+.profile-menu.active { display: block; }
+
+.profile-email {
+    font-size: 0.85rem;
+    color: #64748b;
+    padding: 8px;
+    word-break: break-all;
+    font-weight: normal;
+}
+
+.profile-menu hr { border: none; border-top: 1px solid #e2e8f0; margin: 5px 0; }
+
+.profile-menu button {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 10px 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #0f172a;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.profile-menu button:hover { background: #f1f5f9; }
+.profile-menu .logout-btn { color: #ef4444; font-weight: bold; }
+.profile-menu .logout-btn:hover { background: #fef2f2; }

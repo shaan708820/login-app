@@ -1,3 +1,4 @@
+let currentUserEmail = '';
 // ==========================================
 // GLOBAL VARIABLES
 // ==========================================
@@ -97,6 +98,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         if (res.ok) {
             // Hide Auth, Show Dashboard
+            currentUserEmail = email;
+            document.getElementById('user-email-display').innerText = currentUserEmail;
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             document.body.style.alignItems = 'flex-start';
@@ -298,5 +301,29 @@ async function executeTrade(action) {
     } finally {
         btn.disabled = false;
         btn.textContent = originalText;
+    }
+}
+// Profile Menu Logic
+function toggleProfileMenu() {
+    document.getElementById('profileMenu').classList.toggle('active');
+}
+
+function openPasswordModal() {
+    alert("Change password functionality coming soon!");
+    toggleProfileMenu(); // Close the menu
+}
+
+function logoutUser() {
+    // In a real app, you'd send a fetch request to a /logout backend route to clear the session
+    window.location.reload(); 
+}
+
+// Close the dropdown if the user clicks anywhere outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-icon')) {
+        const menu = document.getElementById('profileMenu');
+        if (menu && menu.classList.contains('active')) {
+            menu.classList.remove('active');
+        }
     }
 }
