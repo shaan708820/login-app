@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth App</title>
+    <title>GrowwTrade Pro</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div id="app-root">
-        <!-- Login Form -->
+    
+    <div id="auth-container">
         <form id="loginForm" class="card">
             <h2>Sign In</h2>
             <div class="input-group">
@@ -20,10 +21,9 @@
                 <input type="password" id="login-password" required>
             </div>
             <button type="submit" class="btn">Login</button>
-            <p class="footer-text">Don't have an account? <a href="#" onclick="toggleForms()">Sign up</a></p>
+            <p class="footer-text">Don't have an account? <a href="#" onclick="toggleForms(event)">Sign up</a></p>
         </form>
 
-        <!-- Signup Form -->
         <form id="signupForm" class="card" style="display: none;">
             <h2>Register</h2>
             <div class="input-group">
@@ -35,11 +35,80 @@
                 <input type="password" id="signup-password" required>
             </div>
             <button type="submit" class="btn">Sign Up</button>
-            <p class="footer-text">Already have an account? <a href="#" onclick="toggleForms()">Sign in</a></p>
+            <p class="footer-text">Already have an account? <a href="#" onclick="toggleForms(event)">Sign in</a></p>
         </form>
     </div>
 
-    <!-- Success Modal -->
+    <div id="dashboard" style="display: none;">
+        <nav class="top-nav">
+            <div class="nav-brand">GrowwTrade Pro</div>
+            <div class="nav-account">
+                Wallet: ₹<span id="wallet-balance">0.00</span>
+                <button onclick="window.location.reload()" class="btn-outline">Logout</button>
+            </div>
+        </nav>
+
+        <div class="dashboard-grid">
+            
+            <div class="side-panel watchlist-panel card">
+                <div class="search-wrapper">
+                    <input type="text" id="stock-search" list="stock-options" placeholder="Search NSE stocks...">
+                    <datalist id="stock-options">
+                        <option value="SUZLON"></option>
+                        <option value="RELIANCE"></option>
+                        <option value="TATAMOTORS"></option>
+                        <option value="HDFCBANK"></option>
+                        <option value="ZOMATO"></option>
+                        <option value="TCS"></option>
+                        <option value="INFY"></option>
+                        <option value="WIPRO"></option>
+                    </datalist>
+                    <button onclick="searchStock()" class="btn btn-search">Go</button>
+                </div>
+                <h3 style="margin: 15px 0 10px 0; font-size: 1rem; color: #64748b;">Watchlist</h3>
+                <div id="watchlist-container" class="holdings-list">
+                    <p style="text-align: center; color: #94a3b8; font-size: 0.9rem;">Loading live data...</p>
+                </div>
+            </div>
+
+            <div class="main-panel">
+                <div class="card chart-container">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px;">
+                        <div>
+                            <h2 id="current-stock-name" style="margin:0; font-size: 1.2rem; color: #64748b;">Loading...</h2>
+                            <h1 id="current-stock-price" style="margin:0; font-size: 2.5rem; color: #0f172a;">₹--.--</h1>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 350px; width: 100%;">
+                        <canvas id="stockChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card trade-panel">
+                    <h3>Trade <span id="trade-symbol">...</span></h3>
+                    <div style="display: flex; gap: 15px; align-items: flex-end;">
+                        <div class="input-group" style="margin: 0; flex: 1;">
+                            <label>Quantity</label>
+                            <input type="number" id="trade-qty" value="1" min="1">
+                        </div>
+                        <button onclick="executeTrade('buy')" class="btn btn-buy" style="flex: 1;">BUY</button>
+                        <button onclick="executeTrade('sell')" class="btn btn-sell" style="flex: 1;">SELL</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel card">
+                <h2 style="font-size: 1.2rem;">Your Holdings</h2>
+                <div class="portfolio-summary">
+                    Total P&L: <span id="total-pnl">₹0.00</span>
+                </div>
+                <div class="holdings-list" id="holdings-container">
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
             <div class="success-icon">&#10004;</div>

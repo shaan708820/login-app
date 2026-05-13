@@ -1,4 +1,12 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+/* ==========================================================================
+   1. BASE STYLES & RESET
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
 
 body {
     background-color: #f1f5f9;
@@ -7,35 +15,92 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    color: #1e293b;
+    transition: align-items 0.3s ease;
 }
 
-#app-root { width: 100%; max-width: 400px; }
+/* ==========================================================================
+   2. REUSABLE COMPONENTS (Cards, Buttons, Inputs)
+   ========================================================================== */
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
-.card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-h2 { text-align: center; margin-bottom: 1.5rem; color: #1e293b; }
+#auth-container {
+    width: 100%;
+    max-width: 400px;
+}
 
-.input-group { margin-bottom: 1rem; }
-.input-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
-.input-group input { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; }
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+}
 
-.btn { width: 100%; padding: 0.75rem; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.input-group {
+    margin-bottom: 1.25rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: #475569;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
 .btn:hover { background: #1d4ed8; }
+.btn:disabled { background: #94a3b8; cursor: not-allowed; }
 
-.footer-text { text-align: center; margin-top: 1rem; font-size: 0.85rem; }
+.footer-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #64748b;
+}
 
-/* Gallery Layout */
-.gallery-wrapper { width: 100%; max-width: 1000px; text-align: center; }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-.gallery-img { width: 100%; border-radius: 8px; opacity: 0; animation: fadeIn 0.8s forwards; transition: transform 0.3s; }
-.gallery-img:hover { transform: scale(1.03); }
+.footer-text a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
 
-@keyframes fadeIn { to { opacity: 1; } }
+.footer-text a:hover { text-decoration: underline; }
 
-/* Error Page */
-.error-box { text-align: center; background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-.error-box h1 { color: #e11d48; margin-bottom: 10px; }
-
-/* --- Custom Modal Popup Styles --- */
+/* ==========================================================================
+   3. SUCCESS MODAL (Animated Popup)
+   ========================================================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -45,6 +110,8 @@ h2 { text-align: center; margin-bottom: 1.5rem; color: #1e293b; }
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    
+    /* Hidden by default */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -93,7 +160,183 @@ h2 { text-align: center; margin-bottom: 1.5rem; color: #1e293b; }
 }
 
 .modal-content h2 { margin-bottom: 0.5rem; color: #1e293b; }
-.modal-content p { color: #64748b; margin-bottom: 1.75rem; font-size: 0.95rem; line-height: 1.5; }
-
+.modal-content p { color: #64748b; margin-bottom: 1.75rem; line-height: 1.5; }
 .modal-btn { background: #10b981; }
 .modal-btn:hover { background: #059669; }
+
+/* ==========================================================================
+   4. TRADING DASHBOARD (PaperTrade)
+   ========================================================================== */
+#dashboard {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+/* Navigation Bar */
+.top-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: white; 
+    padding: 1rem 1.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+}
+
+.nav-brand { 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    color: #2563eb; 
+    letter-spacing: -0.5px;
+}
+
+.search-bar { display: flex; gap: 10px; }
+.search-bar input { 
+    padding: 0.6rem 1rem; 
+    border: 1px solid #cbd5e1; 
+    border-radius: 6px; 
+    width: 300px; 
+    outline: none;
+}
+.search-bar input:focus { border-color: #2563eb; }
+
+.btn-small { 
+    padding: 0.6rem 1rem; 
+    background: #0f172a; 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: 600;
+}
+.btn-small:hover { background: #334155; }
+
+.nav-account {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #475569;
+}
+
+#wallet-balance { color: #10b981; font-weight: 700; font-size: 1.1rem; }
+
+.btn-outline { 
+    padding: 0.5rem 1rem; 
+    background: transparent; 
+    color: #ef4444; 
+    border: 1px solid #ef4444; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.btn-outline:hover { background: #fef2f2; }
+
+/* Dashboard Grid Layout */
+.dashboard-grid { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr; 
+    gap: 1.5rem; 
+}
+
+/* Left Panel: Charts & Trading */
+.chart-container { margin-bottom: 1.5rem; }
+.chart-container h2 { text-align: left; margin-bottom: 5px; color: #64748b; font-size: 1rem; font-weight: 600; }
+#current-stock-price { font-size: 2.5rem; margin-bottom: 20px; color: #0f172a; font-weight: 800; }
+
+.trade-panel h3 { margin-bottom: 1rem; color: #0f172a; }
+.trade-buttons { display: flex; gap: 15px; margin-top: 15px; }
+
+.btn-buy { background: #10b981; font-size: 1.1rem; }
+.btn-buy:hover { background: #059669; }
+
+.btn-sell { background: #ef4444; font-size: 1.1rem; }
+.btn-sell:hover { background: #dc2626; }
+
+/* Right Panel: Portfolio Holdings */
+.side-panel .card h2 { text-align: left; margin-bottom: 1rem; color: #0f172a; }
+
+.portfolio-summary { 
+    margin-bottom: 1.5rem; 
+    font-weight: 600; 
+    font-size: 1.1rem; 
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.holdings-list { display: flex; flex-direction: column; gap: 12px; }
+
+.holding-item { 
+    border: 1px solid #e2e8f0; 
+    padding: 1rem; 
+    border-radius: 8px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: #f8fafc;
+    transition: transform 0.2s;
+}
+.holding-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+
+.holding-symbol { font-weight: 700; font-size: 1.1rem; color: #0f172a; }
+.holding-details { font-size: 0.85rem; color: #64748b; margin-top: 3px; }
+
+/* Utility Classes for Profit/Loss colors */
+.profit { color: #10b981; font-weight: 600; }
+.loss { color: #ef4444; font-weight: 600; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .top-nav { flex-direction: column; gap: 15px; }
+    .search-bar input { width: 100%; }
+}
+
+
+/* --- Professional 3-Column Layout --- */
+#dashboard {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-grid { 
+    display: grid; 
+    grid-template-columns: 300px 1fr 320px; /* Watchlist | Chart | Portfolio */
+    gap: 20px; 
+    align-items: start;
+}
+
+/* Search Area */
+.search-wrapper { display: flex; gap: 8px; }
+.search-wrapper input { 
+    flex: 1; padding: 0.6rem 1rem; border: 1px solid #cbd5e1; 
+    border-radius: 6px; outline: none; font-size: 0.95rem;
+}
+.search-wrapper input:focus { border-color: #2563eb; }
+.btn-search { width: auto; padding: 0.6rem 1rem; }
+
+/* Watchlist & Holdings Styling */
+.holdings-list { display: flex; flex-direction: column; gap: 10px; max-height: 600px; overflow-y: auto; padding-right: 5px; }
+.holding-item { 
+    border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; 
+    display: flex; justify-content: space-between; align-items: center; 
+    background: #f8fafc; transition: background 0.2s; cursor: pointer;
+}
+.holding-item:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.holding-symbol { font-weight: 700; font-size: 1rem; color: #0f172a; }
+.holding-details { font-size: 0.8rem; color: #64748b; margin-top: 2px; }
+.price-tag { font-weight: 700; font-size: 1rem; color: #0f172a; text-align: right; }
+
+/* Scrollbar for lists */
+.holdings-list::-webkit-scrollbar { width: 6px; }
+.holdings-list::-webkit-scrollbar-track { background: transparent; }
+.holdings-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+@media (max-width: 1100px) {
+    .dashboard-grid { grid-template-columns: 250px 1fr; }
+    .dashboard-grid .side-panel:last-child { grid-column: span 2; }
+}
