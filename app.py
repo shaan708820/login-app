@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, session
+import os
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import yfinance as yf
@@ -36,7 +37,9 @@ def get_live_data(symbol):
         return None
 
 @app.route('/')
-def index(): return app.send_static_file('index.html')
+def index(): 
+    from flask import send_from_directory
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -153,4 +156,5 @@ def trade():
     return jsonify({"message": f"Successfully {action}ed {qty} shares of {symbol} at ₹{price}!"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('PORT', '5005'))
+    app.run(debug=True, host='0.0.0.0', port=port)
