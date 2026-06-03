@@ -1,0 +1,12 @@
+services:
+  stock-app:
+    image: groww:v1.0.0
+    container_name: stock-app-container
+
+    ports:
+      - "5005:5005"
+
+    environment:
+      PORT: 5005
+
+    restart: always
