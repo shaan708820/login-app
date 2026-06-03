@@ -1,0 +1,34 @@
+name: AWS Zero-Downtime Deployment
+
+# 1. This pipeline triggers automatically when you push to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 2. Log into AWS using the hidden secrets we just created
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1 # Matches your Terraform region
+
+      # 3. Tell the Web Auto Scaling Group to replace its servers with new ones
+      - name: Refresh Web Frontend
+        run: |
+          aws autoscaling start-instance-refresh \
+            --auto-scaling-group-name web-asg \
+            --preferences '{"MinHealthyPercentage": 50}'
+
+      # 4. Tell the App Auto Scaling Group to replace its servers with new ones
+      - name: Refresh App Backend
+        run: |
+          aws autoscaling start-instance-refresh \
+            --auto-scaling-group-name app-asg \
+            --preferences '{"MinHealthyPercentage": 50}'
