@@ -7,6 +7,8 @@ on:
     # We ignore changes to the charts folder so the bot pushing updates doesn't trigger an infinite loop
     paths-ignore:
       - 'charts/**'
+permissions:
+  contents: write
 
 jobs:
   build-and-update:
