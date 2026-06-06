@@ -1,7 +1,7 @@
 replicaCount: 1 # Must be 1 to prevent SQLite file conflicts
 image:
   repository: mshaan/groww # Update this to your actual image!
-  tag: "latest"
+  tag: "v1.0.0"
 service:
   type: LoadBalancer
   port: 80
